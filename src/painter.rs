@@ -1,5 +1,6 @@
 use std::collections::{HashMap, LinkedList};
 
+use egui::{load::SizedTexture, vec2};
 use ggez::graphics::{self, BlendComponent, BlendFactor, BlendMode, BlendOperation};
 
 #[derive(Default, Clone)]
@@ -8,9 +9,28 @@ pub struct Painter {
 	pub(crate) textures_delta: LinkedList<egui::TexturesDelta>,
 	paint_jobs: Vec<(egui::TextureId, graphics::Mesh, graphics::Rect)>,
 	textures: HashMap<egui::TextureId, graphics::Image>,
+	next_id: u64,
 }
 
 impl Painter {
+	pub fn allocate_texture(&mut self, texture: graphics::Image) -> SizedTexture {
+		let id = egui::TextureId::User(self.next_id);
+		let sized_texture = SizedTexture::new(id, vec2(texture.width() as f32, texture.height() as f32));
+		
+		self.textures.insert(id, texture);
+		self.next_id += 1;
+
+		sized_texture
+	}
+
+	pub fn free_texture(&mut self, id: egui::TextureId) {
+		if matches!(id, egui::TextureId::Managed(_)) {
+			eprintln!("Error: Attempting to free a managed texture");
+			return;
+		}
+		self.textures.remove(&id);
+	}
+
 	pub fn draw(&mut self, canvas: &mut graphics::Canvas, scale_factor: f32) {
 		let prev_blend = canvas.blend_mode();
 		canvas.set_blend_mode(BlendMode {

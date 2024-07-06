@@ -2,6 +2,7 @@ mod input;
 mod painter;
 
 pub use egui;
+use egui::load::SizedTexture;
 use ggez::{
 	context::Has,
 	graphics::{self, Canvas, DrawParam, Drawable, GraphicsContext},
@@ -109,6 +110,19 @@ impl Gui {
 			.update(ctx, self.input.scale_factor);
 		// self.input.set_scale_factor(1.0, ctx.gfx.size());
 	}
+
+	pub fn allocate_texture(&mut self, texture: ggez::graphics::Image) -> SizedTexture {
+		self.painter.lock()
+			.unwrap()
+			.allocate_texture(texture)
+	}
+
+	pub fn free_texture(&mut self, texture: impl Into<egui::TextureId>) {
+		self.painter.lock()
+			.unwrap()
+			.free_texture(texture.into())
+	}
+
 
 	/// Return an [`EguiContext`] for update the gui
 	pub fn ctx(&mut self) -> GuiContext {
