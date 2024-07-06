@@ -105,8 +105,12 @@ impl Input {
 	}
 
 	/// lets you know the rotation of the mouse wheel
-	pub fn mouse_wheel_event(&mut self, x: f32, y: f32) {
-		self.raw.events.push(egui::Event::Scroll(vec2(x, y)));
+	pub fn mouse_wheel_event(&mut self, x: f32, y: f32, mods: KeyMods) {
+		self.raw.events.push(egui::Event::MouseWheel {
+			unit: egui::MouseWheelUnit::Point,
+			delta: vec2(x, y),
+			modifiers: translate_modifier(mods)
+		})
 	}
 
 	/// lets know what character is pressed on the keyboard
