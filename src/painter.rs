@@ -123,7 +123,7 @@ impl Painter {
 			}
 			let image = match &delta.image {
 				egui::ImageData::Color(image) => color_to_image(image, ctx),
-				egui::ImageData::Font(image) => font_to_image(image, ctx),
+				// egui::ImageData::Font(image) => font_to_image(image, ctx),
 			};
 
 			self.textures.insert(*id, image);
@@ -160,24 +160,24 @@ fn color_to_image(color: &egui::ColorImage, ctx: &mut ggez::Context) -> graphics
 }
 
 // Generate Image from egui FontImage
-fn font_to_image(font: &egui::FontImage, ctx: &mut ggez::Context) -> graphics::Image {
-	assert_eq!(
-		font.width() * font.height(),
-		font.pixels.len(),
-		"Mismatch between texture size and texel count"
-	);
+// fn font_to_image(font: &egui::FontImage, ctx: &mut ggez::Context) -> graphics::Image {
+// 	assert_eq!(
+// 		font.width() * font.height(),
+// 		font.pixels.len(),
+// 		"Mismatch between texture size and texel count"
+// 	);
 
-	let mut pixels: Vec<u8> = Vec::with_capacity(font.pixels.len() * 4);
+// 	let mut pixels: Vec<u8> = Vec::with_capacity(font.pixels.len() * 4);
 
-	for pixel in font.srgba_pixels(None) {
-		pixels.extend(pixel.to_array());
-	}
+// 	for pixel in font.srgba_pixels(None) {
+// 		pixels.extend(pixel.to_array());
+// 	}
 
-	graphics::Image::from_pixels(
-		ctx,
-		pixels.as_slice(),
-		graphics::ImageFormat::Rgba8UnormSrgb,
-		font.width() as u32,
-		font.height() as u32,
-	)
-}
+// 	graphics::Image::from_pixels(
+// 		ctx,
+// 		pixels.as_slice(),
+// 		graphics::ImageFormat::Rgba8UnormSrgb,
+// 		font.width() as u32,
+// 		font.height() as u32,
+// 	)
+// }

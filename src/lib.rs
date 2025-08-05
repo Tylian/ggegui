@@ -36,7 +36,7 @@ impl Drop for GuiContext {
 			shapes,
 			pixels_per_point,
 			..
-		} = self.context.end_frame();
+		} = self.context.end_pass();
 
 		let mut painter = self.painter.lock().unwrap();
 		painter.shapes = self.context.tessellate(shapes, pixels_per_point);
@@ -126,7 +126,7 @@ impl Gui {
 
 	/// Return an [`EguiContext`] for update the gui
 	pub fn ctx(&mut self) -> GuiContext {
-		self.context.begin_frame(self.input.take());
+		self.context.begin_pass(self.input.take());
 		GuiContext {
 			context: self.context.clone(),
 			painter: self.painter.clone(),
