@@ -109,7 +109,7 @@ impl Input {
 		self.raw.events.push(egui::Event::MouseWheel {
 			unit: egui::MouseWheelUnit::Point,
 			delta: vec2(x, y),
-			modifiers: translate_modifier(mods)
+			modifiers: translate_modifier(mods),
 		})
 	}
 

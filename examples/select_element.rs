@@ -72,8 +72,8 @@ impl EventHandler<ggez::GameError> for MyGame {
 			ui.add(
 				egui::TextEdit::singleline(&mut self.curret_element).hint_text("put an id here"),
 			);
-			let selected = self.elements.contains_key(&self.curret_element)
-				&& !self.curret_element.is_empty();
+			let selected =
+				self.elements.contains_key(&self.curret_element) && !self.curret_element.is_empty();
 			if ui
 				.add_enabled(!selected, egui::Button::new("add element"))
 				.clicked()

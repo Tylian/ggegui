@@ -15,8 +15,9 @@ pub struct Painter {
 impl Painter {
 	pub fn allocate_texture(&mut self, texture: graphics::Image) -> SizedTexture {
 		let id = egui::TextureId::User(self.next_id);
-		let sized_texture = SizedTexture::new(id, vec2(texture.width() as f32, texture.height() as f32));
-		
+		let sized_texture =
+			SizedTexture::new(id, vec2(texture.width() as f32, texture.height() as f32));
+
 		self.textures.insert(id, texture);
 		self.next_id += 1;
 
