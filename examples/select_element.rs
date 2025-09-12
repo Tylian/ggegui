@@ -44,8 +44,8 @@ impl Drawable for Element {
 		)
 	}
 
-	fn dimensions(&self, _gfx: &impl Has<GraphicsContext>) -> Option<graphics::Rect> {
-		None
+	fn dimensions(&self, _gfx: &impl Has<GraphicsContext>) -> graphics::Rect {
+		Rect::zero()
 	}
 }
 
@@ -65,7 +65,7 @@ struct MyGame {
 	curret_element: String,
 }
 
-impl EventHandler<ggez::GameError> for MyGame {
+impl EventHandler<ggez::Context, ggez::GameError> for MyGame {
 	fn update(&mut self, ctx: &mut ggez::Context) -> ggez::GameResult {
 		let gui_ctx = self.gui.ctx();
 		egui::Window::new("Editor").show(&gui_ctx, |ui| {

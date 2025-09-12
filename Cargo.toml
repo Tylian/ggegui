@@ -12,7 +12,7 @@ description = "A simple implementation of egui for ggez"
 
 [dependencies]
 egui = "0.32.0"
-ggez = "0.9.3"
+ggez = "0.10.0-rc0"
 
 [dev-dependencies]
 egui_demo_lib = "0.32.0"

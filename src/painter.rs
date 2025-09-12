@@ -1,6 +1,6 @@
 use std::collections::{HashMap, LinkedList};
 
-use egui::{load::SizedTexture, vec2};
+use egui::{load::SizedTexture, vec2, Rect};
 use ggez::graphics::{self, BlendComponent, BlendFactor, BlendMode, BlendOperation};
 
 #[derive(Default, Clone)]
@@ -57,6 +57,11 @@ impl Painter {
 		canvas.set_default_scissor_rect();
 		self.paint_jobs.clear();
 		canvas.set_blend_mode(prev_blend);
+	}
+
+	pub fn dimensions(&self, scale_factor: f32) -> graphics::Rect {
+		self.paint_jobs.iter()
+			.fold(graphics::Rect::zero(), |rect, (_, _, clip)| clip.combine_with(rect))
 	}
 
 	pub fn update(&mut self, ctx: &mut ggez::Context, scale_factor: f32) {
